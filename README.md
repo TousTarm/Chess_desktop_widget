@@ -1,70 +1,59 @@
 # Chess Puzzle Desktop Widget
 
-A lightweight desktop chess puzzle trainer powered by the [Lichess](https://lichess.org) public API. Runs as a always-on-top window so you can drill tactics between tasks.
-
-![Python](https://img.shields.io/badge/python-3.8%2B-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+A small always-on-top window with chess puzzles from the [Lichess](https://lichess.org) public API. I keep it on screen to solve a puzzle while waiting for a long-running AI prompt; it stays out of the way of other windows.
 
 ## Features
 
-- Fetches random rated puzzles from Lichess in real time
-- Click-to-move interface with legal-move indicators
-- Two-stage hint system (highlight piece → highlight destination)
-- Auto-plays opponent responses after each correct move
-- Flip board, animated feedback (green flash / red flash)
-- Displays puzzle rating and themes
+- Loads the next puzzle from `https://lichess.org/api/puzzle/next` (no account needed)
+- Click-to-move with legal-move indicators
+- Two-stage hint (first the piece to move, then the target square)
+- Opponent replies are played automatically after each correct move
+- Green flash on a correct move, red flash on a wrong one
+- Shows the puzzle rating and up to three themes
+- Flip board, skip to the next puzzle
 
 ## Requirements
 
-- Python 3.8+
-- A chess piece sprite sheet at `../../Chess_Pieces_Sprite.png` relative to `app.py`  
-  (standard 6-column × 2-row layout: White on row 0, Black on row 1; columns: King, Queen, Bishop, Knight, Rook, Pawn)
+- Python 3 with Tkinter
+- `python-chess`, `requests` and `Pillow`
+- A chess piece sprite sheet (not included in the repo, see below)
 
-Install Python dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Usage
+## Setup and running
 
 ```bash
-python app.py
+python3 -m venv venv
+venv/bin/pip install -r requirements.txt pillow   # Pillow is not listed in requirements.txt
+venv/bin/python app.py
 ```
 
-The window stays on top of other applications. Use the buttons at the bottom:
+Buttons at the bottom:
 
 | Button | Action |
 |--------|--------|
-| **Hint** | First press highlights the piece to move; second press reveals the destination |
-| **Next →** | Skip to a new puzzle |
-| **Flip** | Flip the board orientation |
+| **Hint** | First press highlights the piece to move, second press the destination |
+| **Next →** | Load a new puzzle |
+| **Flip** | Flip the board |
 
-## Sprite Sheet
+## Sprite sheet
 
-The app expects a sprite sheet at `../../Chess_Pieces_Sprite.png` (two levels up from `app.py`). You can change `SPRITE_PATH` at the top of `app.py` to point anywhere you like.
+`app.py` loads the pieces from `../../Chess_Pieces_Sprite.png` relative to itself. Change `SPRITE_PATH` at the top of `app.py` to use another location. Image files are ignored by `.gitignore`.
 
-Expected layout (any resolution, must be 6 wide × 2 tall grid):
+The image must be a 6 × 2 grid (any resolution):
 
 ```
 [ K ][ Q ][ B ][ N ][ R ][ P ]   ← White (row 0)
 [ k ][ q ][ b ][ n ][ r ][ p ]   ← Black (row 1)
 ```
 
-## Project Structure
+## Tests
+
+There are no tests.
+
+## Structure
 
 ```
-Chess_desktop_widget/
-├── app.py            # Main application
-├── requirements.txt  # Python dependencies
-└── README.md
+app.py            the whole application (Tkinter UI, puzzle logic, Lichess client)
+requirements.txt  python-chess, requests
 ```
 
-## Dependencies
-
-| Package | Purpose |
-|---------|---------|
-| `python-chess` | Board representation, move generation, PGN parsing |
-| `requests` | Lichess API HTTP calls |
-| `Pillow` | Sprite sheet loading and image resizing |
-| `tkinter` | GUI (bundled with Python) |
+Built with the help of AI coding tools.
