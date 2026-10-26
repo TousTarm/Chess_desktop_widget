@@ -22,7 +22,7 @@ A small always-on-top window with chess puzzles from the [Lichess](https://liche
 
 ```bash
 python3 -m venv venv
-venv/bin/pip install -r requirements.txt pillow   # Pillow is not listed in requirements.txt
+venv/bin/pip install -r requirements.txt
 venv/bin/python app.py
 ```
 
@@ -53,7 +53,7 @@ There are no tests.
 
 ```
 app.py            the whole application (Tkinter UI, puzzle logic, Lichess client)
-requirements.txt  python-chess, requests
+requirements.txt  python-chess, requests, Pillow
 ```
 
 Built with the help of AI coding tools.
